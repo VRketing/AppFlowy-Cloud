@@ -8,9 +8,9 @@ services:
       - ${NGINX_PORT:-80}:80   # Disable this if you are using TLS
       - ${NGINX_TLS_PORT:-443}:443
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
-      - ./nginx/ssl/private_key.key:/etc/nginx/ssl/private_key.key
+      - ${LOCAL_PATH}/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ${LOCAL_PATH}/nginx/ssl/certificate.crt:/etc/nginx/ssl/certificate.crt
+      - ${LOCAL_PATH}/nginx/ssl/private_key.key:/etc/nginx/ssl/private_key.key
 
   # You do not need this if you have configured to use your own s3 file storage
   minio:
@@ -35,7 +35,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
       - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
     volumes:
-      - ./migrations/before:/docker-entrypoint-initdb.d
+      - ${LOCAL_PATH}/migrations/before:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
 
   redis:
